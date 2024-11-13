@@ -1,9 +1,6 @@
 mod chapters;
 fn main() {
-    chapters::chapter1::invoke();
-    chapters::data_store::tuple();
-    chapters::control_flow::control_flow();
-  
+    chapters::ownership::try_understand_ownership();
 }
 
 // 1 1 2 3
