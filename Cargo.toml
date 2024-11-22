@@ -9,3 +9,7 @@ edition = "2021"
 cli-table = "0.4.9"
 rand = "0.8.5"
 serial_enumerator = "0.2.12"
+
+
+[profile.dev]
+panic = "abort"

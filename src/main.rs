@@ -12,5 +12,16 @@ fn main() {
     has_one.insert(field_one.clone(), field_two);
     
     println!("{:}", field_one);
-    println!("{:}", has_one.get(&field_three).unwrap_or( &String::from("fsaf")));
+    println!("{:}", has_one.get(&field_three).unwrap());
+
+    let mut pointer = 0;
+    
+    loop {
+        pointer = pointer + 1;
+        
+        if pointer == 10 {
+            panic!("Iancu get out")
+        }
+        
+    }
 }
