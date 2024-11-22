@@ -1,3 +1,4 @@
+#[derive(Debug)]
 pub struct Color {
     pub red: u8,
     pub green: u8,
@@ -20,3 +21,9 @@ pub fn build_color(red: u8, blue: u8) -> Color {
 pub fn adding_color(color1: &Color, color2: &Color) -> u8 {
     color1.red + color2.red
 }
+
+
+pub fn adding_color_take_ownership(color1: Color, color2: Color) -> u8 {
+    color1.red + color2.red
+}
+
