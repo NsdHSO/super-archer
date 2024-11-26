@@ -1,6 +1,7 @@
 use std::io::Read;
-use std::net::Ipv4Addr;
-use std::{fs, io};
+use std::fs;
+use std::ops::Deref;
+use crate::chapters::traits::News;
 
 mod chapters;
 
@@ -21,27 +22,57 @@ fn main() {
     let mut content = fs::read_to_string("src/username.txt").unwrap_or_else(|_| String::new()); // If the file doesn't exist, start with an empty string
 
     fs::write("src/username.txt", &content).expect("Unable to write file");
-    let arrary = [1,2,3,4,5,6,7,8,9,10,1,3,5,100];
-    let chars = vec!['y', 'm','z', 'a', 'q'];
-
-    println!("{:?}",largest(&arrary));
-    println!("{:?}",largest(&chars));
+    let post = Post{
+        title: "Parandulea".to_string(),
+        author: "Andrea".to_string(),
+        comment: "Iancu is the best".to_string(),
+        content,
+    };
+    let dry_voltage = 5;
+    let my_config = MyConfig::new(dry_voltage,10);
+    
+    
+    println!("{}", *my_config);   
+    println!("{}", Post::comments());
+}
+#[derive(Debug)]
+struct Post {
+    title: String,
+    author: String,
+    comment: String,
+    content: String,
 }
 
-fn my_home(ipAddres: &mut String) -> Ipv4Addr {
-    let ip = ipAddres.trim().parse();
-    ip.unwrap_or_else(|err| {
-        println!("Unable to parse {}", err);
-        Ipv4Addr::new(0, 0, 0, 0)
-    })
+impl News for Post {
+    fn read(self) -> Post{
+        self
+    }
+
+    fn comments() -> String {
+        String::from("Iancu")
+    }
 }
 
-fn largest<T : PartialOrd>(list: &[T]) -> &T {
-    let mut largest = &list[0];
-    for item in list {
-        if item > largest {
-            largest = item;
+struct MyConfig<T> {
+    dry_voltage: T,
+    wet_voltage: T,
+    moisture_percentage: T,
+}
+
+impl<T: Default> MyConfig<T> {
+    fn new(dry_voltage: T, wet_voltage: T) -> MyConfig<T> {
+        MyConfig{
+            dry_voltage,
+            wet_voltage,
+            moisture_percentage: T::default()
         }
     }
-    largest
+}
+
+impl <T> Deref for MyConfig<T> {
+    type Target = T;
+    
+    fn deref(&self) -> &Self::Target {
+        &self.dry_voltage
+    }
 }
