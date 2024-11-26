@@ -1,3 +1,4 @@
+use std::fmt::{Display, Formatter};
 use std::io::Read;
 use std::fs;
 use std::ops::Deref;
@@ -33,6 +34,8 @@ fn main() {
     
     
     println!("{}", *my_config);   
+    println!("{}", *my_config);   
+    say_something(&my_config);
     println!("{}", Post::comments());
 }
 #[derive(Debug)]
@@ -69,10 +72,22 @@ impl<T: Default> MyConfig<T> {
     }
 }
 
+impl<T> Display for MyConfig<T> {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        println!("Dry voltage: {}", self);
+
+        todo!()
+    }
+}
+
 impl <T> Deref for MyConfig<T> {
     type Target = T;
     
     fn deref(&self) -> &Self::Target {
         &self.dry_voltage
     }
+}
+
+fn say_something<T : Display>(something: T) {
+    println!("I am saying {}", something);
 }
