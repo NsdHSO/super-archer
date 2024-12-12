@@ -2,41 +2,23 @@ use std::fmt::{Display, Formatter};
 use std::io::Read;
 use std::fs;
 use std::ops::Deref;
+use std::thread::sleep;
+use std::time::Duration;
 use crate::chapters::traits::News;
 
 mod chapters;
 
-fn main() {
-    let file = fs::read("src/text.txt");
-    let file = match file {
-        Ok(file) => file,
-        Err(err) => panic!("No file {}", err),
-    };
+#[tokio::main]
+async fn main() {
+    let a = wait_to_add(2,3).await;
+    println!("Hello, world!, {:#?}",   a);
+}
 
-    for line in file.split(|&byte| byte == b'\n') {
-        match String::from_utf8(line.to_vec()) {
-            Ok(string) => println!("{}", string),
-            Err(err) => panic!("{}", err),
-        }
-    }
-    // Step 1: Read the existing file content
-    let mut content = fs::read_to_string("src/username.txt").unwrap_or_else(|_| String::new()); // If the file doesn't exist, start with an empty string
-
-    fs::write("src/username.txt", &content).expect("Unable to write file");
-    let post = Post{
-        title: "Parandulea".to_string(),
-        author: "Andrea".to_string(),
-        comment: "Iancu is the best".to_string(),
-        content,
-    };
-    let dry_voltage = 5;
-    let my_config = MyConfig::new(dry_voltage,10);
-    
-    
-    println!("{}", *my_config);   
-    println!("{}", *my_config);   
-    say_something(&my_config);
-    println!("{}", Post::comments());
+async fn wait_to_add(a:u32, b:u32)->u32{
+    println!("Wait");
+    sleep(Duration::from_secs(3));
+    println!("After {:?}", a);
+    a+b
 }
 #[derive(Debug)]
 struct Post {
