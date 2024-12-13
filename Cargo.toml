@@ -9,7 +9,8 @@ edition = "2021"
 cli-table = "0.4.9"
 rand = "0.8.5"
 serial_enumerator = "0.2.12"
-tokio = { version = "1.42.0", features = ["rt", "rt-multi-thread", "macros"] }
+tokio = { version = "1.42.0", features = ["rt", "rt-multi-thread", "macros", "time"] }
+time = "0.3.37"
 
 
 [profile.dev]
